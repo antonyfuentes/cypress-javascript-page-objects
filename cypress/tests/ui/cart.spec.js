@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-import {ProductCategoryPage} from '../page-objects/pages/product-category';
-import {CartPage} from '../page-objects/pages/cart';
-import {HomePage} from '../page-objects/pages/home';
-import {Common} from '../page-objects/common';
-import {ProductDetailPage} from '../page-objects/pages/product-detail';
-import {CartComponent} from '../page-objects/components/add-cart';
-import {APIRequest} from '../support/api-requests';
+import {ProductCategoryPage} from '../../page-objects/pages/product-category';
+import {CartPage} from '../../page-objects/pages/cart';
+import {HomePage} from '../../page-objects/pages/home';
+import {Common} from '../../page-objects/common';
+import {ProductDetailPage} from '../../page-objects/pages/product-detail';
+import {CartComponent} from '../../page-objects/components/add-cart';
+import {APIRequest} from '../../support/api-requests';
 
 describe('Cart page tests', () => {
 
