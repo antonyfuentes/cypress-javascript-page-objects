@@ -36,6 +36,51 @@ export class API {
     });
   }
 
+  findProductByID(productId) {
+    return cy.request({
+      method: 'GET',
+      url: `wp-json/wc/v3/products/${productId}`,
+      auth: {
+        user: Cypress.env('ECOMMERCE_USER'),
+        pass: Cypress.env('ECOMMERCE_PASS')
+      }
+  }).then((resp) => {
+      return resp.body
+    });
+  }
+
+  createReviewForProduct(productId, review) {
+    cy.request({
+      method: 'POST',
+      url: 'wp-json/wc/v3/products/reviews',
+      auth: {
+        user: Cypress.env('ECOMMERCE_USER'),
+        pass: Cypress.env('ECOMMERCE_PASS')
+      },
+      body: {
+        product_id: productId,
+        review: review,
+        reviewer: "John Doe",
+        reviewer_email: "john.doe@mail.com",
+        rating: 5
+      }
+  }).then((resp) => {
+    cy.wrap(resp.body.id).as('reviewId')
+    });
+  }
+
+  deleteReviewForProduct() {
+    cy.get('@reviewId').then((reviewId) => {
+      cy.request({
+        method: 'DELETE',
+        url: `/wp-json/wc/v3/products/reviews/${reviewId}?force=true`,
+        auth: {
+          user: Cypress.env('ECOMMERCE_USER'),
+          pass: Cypress.env('ECOMMERCE_PASS')
+        }
+      });
+    });
+  }
 }
 
 export const APIRequest = new API();
