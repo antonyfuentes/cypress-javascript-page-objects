@@ -50,9 +50,9 @@ export class API {
   }
 
   createReviewForProduct(productId, review) {
-    return cy.request({
+    cy.request({
       method: 'POST',
-      url: '/wp-json/wc/v3/products/reviews',
+      url: 'wp-json/wc/v3/products/reviews',
       auth: {
         user: Cypress.env('ECOMMERCE_USER'),
         pass: Cypress.env('ECOMMERCE_PASS')
@@ -65,18 +65,20 @@ export class API {
         rating: 5
       }
   }).then((resp) => {
-    return resp.body.id
+    cy.wrap(resp.body.id).as('reviewId')
     });
   }
 
-  deleteReviewForProduct(reviewID) {
-    cy.request({
-      method: 'DELETE',
-      url: `/wp-json/wc/v3/products/reviews/${reviewID}?force=true`,
-      auth: {
-        user: Cypress.env('ECOMMERCE_USER'),
-        pass: Cypress.env('ECOMMERCE_PASS')
-      }
+  deleteReviewForProduct() {
+    cy.get('@reviewId').then((reviewId) => {
+      cy.request({
+        method: 'DELETE',
+        url: `/wp-json/wc/v3/products/reviews/${reviewId}?force=true`,
+        auth: {
+          user: Cypress.env('ECOMMERCE_USER'),
+          pass: Cypress.env('ECOMMERCE_PASS')
+        }
+      });
     });
   }
 }

@@ -7,22 +7,19 @@ describe('Account details page tests', () => {
 
     const productID = 39
     const review = `This shirt was reviewed during the bootcamp on ${new Date()}`
-    let reviewID
   
     before('Create Review for test', () => {
-        APIRequest.createReviewForProduct(productID, review).then((id) => {
-            reviewID = id
-        })
+        APIRequest.createReviewForProduct(productID, review)
     });
 
     after('Clean up and delete review', () => {
-        APIRequest.deleteReviewForProduct(reviewID)
+        APIRequest.deleteReviewForProduct()
     })
 
 
     it('should be able to see a review for a product', () => {
         ProductDetailPage.navigate('vneck-tee/')
         reviewsComponent.open()
-        reviewsComponent.getReviewByID(reviewID).should('contain.text', review)
+        reviewsComponent.getReview().should('contain.text', review)
     });
 });

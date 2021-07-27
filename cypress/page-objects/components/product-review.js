@@ -8,8 +8,10 @@ export class ProductReview {
       this.elements.getReviewsLink().click();
     }
 
-    getReviewByID(reviewID) {
-        return cy.get(`div#comment-${reviewID} .description`)
+    getReview() {
+      return cy.get('@reviewId').then((reviewId) => {
+        return cy.get(`div#comment-${reviewId} .description`)
+      });
     }
 
     
