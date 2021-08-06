@@ -4,7 +4,7 @@
   "description": "Testing framework for Anto's shopping site",
   "main": "index.js",
   "scripts": {
-    "test:chrome": "./node_modules/cypress/bin/cypress run --browser chrome",
+    "test:chrome": "./node_modules/cypress/bin/cypress run --browser chrome --headless",
     "test:edge": "./node_modules/cypress/bin/cypress run --browser edge",
     "test:firefox": "./node_modules/cypress/bin/cypress run --browser firefox",
     "test:merge-report": "./node_modules/.bin/mochawesome-merge results/*.json > results/test_results.json && rm -rf results/mochawesome_*",
@@ -21,5 +21,8 @@
     "cypress": "^7.7.0",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0"
+  },
+  "devDependencies": {
+    "cypress-grep": "^2.5.3"
   }
 }

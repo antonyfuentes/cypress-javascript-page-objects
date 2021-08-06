@@ -15,6 +15,9 @@ macOS:
   - CYPRESS_ECOMMERCE_PASS
 - To open Cypress' GUI run `npx cypress open`. The you will be able to run the tests from there
 - If you want to run the tests from your terminal, simply run: `npm run test:chrome`
+- Also, if you are interested in running tests that belong to a specific tag:
+  - First declare the following variable: `export CYPRESS_grepTags=@YourTag`
+  - And then run the tests usimg the npm command mentioned above
 
 ### Tests implemented:
 - Nine tests in total were implemented as part of this framework using JavaScript as the backbone programming language

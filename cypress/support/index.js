@@ -16,14 +16,24 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 import addContext from 'mochawesome/addContext';
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+require('cypress-grep')()
 
 Cypress.on('test:after:run', (test, runnable) => {
+  // Extract tags from the test
+  const testTags = test._testConfig ? test._testConfig.tags.join(", ") : 'No Tags';
+  
+  // Cleanup title if it has a do in the end
+  const title = test.title.charAt(test.title.length - 1) === '.' ? test.title.slice(0, -1) : test.title;
+
+  // Modifing the title of the test in the mochawesome report
+  test.title = `${title} -- [ ${testTags} ]`;
+
+  // Adding tests tags to the context
+  addContext({ test }, `Cypress Tags: [ ${testTags} ]`);
+
   if (test.state === 'failed') {
     const specName = Cypress.spec.name;
-    const screenshot = `${Cypress.config('screenshotsFolder')}/${specName}/${runnable.parent.title} -- ${test.title} (failed).png`;
+    const screenshot = `${Cypress.config('screenshotsFolder')}/${specName}/${runnable.parent.title} -- ${title} (failed).png`;
     const video = `${Cypress.config('videosFolder')}/${specName}.mp4`;
 
     addContext({ test }, screenshot);
